@@ -1,4 +1,5 @@
-'use client'
+"use client";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -104,6 +105,33 @@ export default function InvoicesPage() {
     );
   }
 
+  const stats = [
+    {
+      name: "Total Invoices",
+      value: invoices.length,
+      color: "indigo",
+      borderColor: "indigo",
+    },
+    {
+      name: "Total Amount",
+      value: `$${getTotalAmount().toFixed(2)}`,
+      color: "green",
+      borderColor: "green",
+    },
+    {
+      name: "Pending",
+      value: getStatusCount('sent') + getStatusCount('draft'),
+      color: "yellow",
+      borderColor: "yellow",
+    },
+    {
+      name: "Overdue",
+      value: getStatusCount('overdue'),
+      color: "red",
+      borderColor: "red",
+    },
+  ];
+
   return (
     <div className="px-4 py-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
       {/* Header Section */}
@@ -123,23 +151,36 @@ export default function InvoicesPage() {
         </div>
       </div>
 
-      {/* Stats Cards - Responsive Grid */}
-      <div className="grid grid-cols-2 gap-3 mb-6 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
-        <div className="p-3 bg-white border-l-4 border-indigo-500 rounded-lg shadow-sm sm:p-4">
-          <p className="text-xs text-gray-500 sm:text-sm">Total Invoices</p>
-          <p className="text-xl font-bold text-gray-900 sm:text-2xl">{invoices.length}</p>
+      {/* Stats Grid - First row: 2 columns, Second row: 2 columns */}
+      <div className="mb-6">
+        {/* First row - Total Invoices & Total Amount */}
+        <div className="grid grid-cols-1 gap-3 mb-3 sm:grid-cols-2 sm:gap-4 sm:mb-4">
+          {stats.slice(0, 2).map((stat) => (
+            <div
+              key={stat.name}
+              className={`p-3 bg-white border-l-4 border-${stat.borderColor}-500 rounded-lg shadow-sm sm:p-4`}
+            >
+              <p className="text-xs text-gray-500 sm:text-sm">{stat.name}</p>
+              <p className={`text-xl font-bold text-${stat.color}-600 sm:text-2xl`}>
+                {stat.value}
+              </p>
+            </div>
+          ))}
         </div>
-        <div className="p-3 bg-white border-l-4 border-green-500 rounded-lg shadow-sm sm:p-4">
-          <p className="text-xs text-gray-500 sm:text-sm">Total Amount</p>
-          <p className="text-xl font-bold text-green-600 sm:text-2xl">${getTotalAmount().toFixed(2)}</p>
-        </div>
-        <div className="p-3 bg-white border-l-4 border-yellow-500 rounded-lg shadow-sm sm:p-4">
-          <p className="text-xs text-gray-500 sm:text-sm">Pending</p>
-          <p className="text-xl font-bold text-yellow-600 sm:text-2xl">{getStatusCount('sent') + getStatusCount('draft')}</p>
-        </div>
-        <div className="p-3 bg-white border-l-4 border-red-500 rounded-lg shadow-sm sm:p-4">
-          <p className="text-xs text-gray-500 sm:text-sm">Overdue</p>
-          <p className="text-xl font-bold text-red-600 sm:text-2xl">{getStatusCount('overdue')}</p>
+
+        {/* Second row - Pending & Overdue */}
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+          {stats.slice(2, 4).map((stat) => (
+            <div
+              key={stat.name}
+              className={`p-3 bg-white border-l-4 border-${stat.borderColor}-500 rounded-lg shadow-sm sm:p-4`}
+            >
+              <p className="text-xs text-gray-500 sm:text-sm">{stat.name}</p>
+              <p className={`text-xl font-bold text-${stat.color}-600 sm:text-2xl`}>
+                {stat.value}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -221,7 +262,7 @@ export default function InvoicesPage() {
                     <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Amount</th>
                     <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Status</th>
                     <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Action</th>
-                  </tr>
+                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {filteredInvoices.map((invoice) => (

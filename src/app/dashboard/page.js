@@ -18,7 +18,6 @@ async function getDashboardData(userId) {
   const pendingInvoices = invoices.filter(inv => inv.status === 'sent' || inv.status === 'draft').length;
   const overdueInvoices = invoices.filter(inv => inv.status === 'overdue').length;
   
-  // Calculate percentage change (for demo - you can implement actual logic)
   const revenueChange = totalRevenue > 0 ? 12.5 : 0;
   
   return {
@@ -42,38 +41,30 @@ export default async function DashboardPage() {
       value: `$${data.totalRevenue.toFixed(2)}`,
       icon: DollarSign,
       color: "green",
-      change: data.revenueChange,
-      trend: "up",
     },
     {
       name: "Total Clients",
       value: data.totalClients,
       icon: Users,
       color: "blue",
-      change: data.totalClients > 0 ? 8 : 0,
-      trend: "up",
     },
     {
       name: "Total Invoices",
       value: data.totalInvoices,
       icon: FileText,
       color: "purple",
-      change: data.totalInvoices > 0 ? 5 : 0,
-      trend: "up",
     },
     {
       name: "Overdue",
       value: data.overdueInvoices,
       icon: Clock,
       color: "orange",
-      change: data.overdueInvoices > 0 ? 2 : 0,
-      trend: data.overdueInvoices > 0 ? "down" : "up",
     },
   ];
 
   return (
     <div className="px-4 py-4 sm:px-6 lg:px-8">
-      {/* Header Section - Mobile Optimized */}
+      {/* Header Section */}
       <div className="mb-6 sm:mb-8">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -94,41 +85,62 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {/* Stats Grid - Fully Responsive */}
-      <div className="grid grid-cols-1 gap-3 mb-6 sm:grid-cols-2 lg:grid-cols-4 sm:mb-8">
-        {stats.map((stat) => (
-          <div
-            key={stat.name}
-            className="relative overflow-hidden transition-all duration-200 bg-white shadow-sm group rounded-xl hover:shadow-md"
-          >
-            <div className="p-3 sm:p-4 lg:p-5">
-              <div className="flex items-center justify-between">
-                <div className={`p-2 rounded-lg sm:p-2.5 lg:p-3 bg-${stat.color}-100`}>
-                  <stat.icon className={`h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-${stat.color}-600`} />
-                </div>
-                {stat.change > 0 && (
-                  <div className={`flex items-center gap-0.5 text-xs font-medium ${stat.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
-                    {stat.trend === 'up' ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                    <span>{stat.change}%</span>
+      {/* Stats Grid - First row: 2 columns, Second row: 2 columns */}
+      <div className="mb-6 sm:mb-8">
+        {/* First row - Total Revenue & Total Clients */}
+        <div className="grid grid-cols-1 gap-3 mb-3 sm:grid-cols-2 sm:gap-4 sm:mb-4">
+          {stats.slice(0, 2).map((stat) => (
+            <div
+              key={stat.name}
+              className="relative overflow-hidden transition-all duration-200 bg-white shadow-sm group rounded-xl hover:shadow-md"
+            >
+              <div className="p-3 sm:p-4 lg:p-5">
+                <div className="flex items-center justify-between">
+                  <div className={`p-2 rounded-lg sm:p-2.5 lg:p-3 bg-${stat.color}-100`}>
+                    <stat.icon className={`h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-${stat.color}-600`} />
                   </div>
-                )}
-              </div>
-              <div className="mt-2 sm:mt-3 lg:mt-4">
-                <dt className="text-xs font-medium text-gray-500 truncate sm:text-sm">
-                  {stat.name}
-                </dt>
-                <dd className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mt-0.5">
-                  {stat.value}
-                </dd>
+                </div>
+                <div className="mt-2 sm:mt-3 lg:mt-4">
+                  <dt className="text-xs font-medium text-gray-500 truncate sm:text-sm">
+                    {stat.name}
+                  </dt>
+                  <dd className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mt-0.5">
+                    {stat.value}
+                  </dd>
+                </div>
               </div>
             </div>
-            {/* Decorative gradient on hover */}
-            <div className="absolute inset-0 transition-transform duration-700 -translate-x-full bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:translate-x-full"></div>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        {/* Second row - Total Invoices & Overdue */}
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+          {stats.slice(2, 4).map((stat) => (
+            <div
+              key={stat.name}
+              className="relative overflow-hidden transition-all duration-200 bg-white shadow-sm group rounded-xl hover:shadow-md"
+            >
+              <div className="p-3 sm:p-4 lg:p-5">
+                <div className="flex items-center justify-between">
+                  <div className={`p-2 rounded-lg sm:p-2.5 lg:p-3 bg-${stat.color}-100`}>
+                    <stat.icon className={`h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-${stat.color}-600`} />
+                  </div>
+                </div>
+                <div className="mt-2 sm:mt-3 lg:mt-4">
+                  <dt className="text-xs font-medium text-gray-500 truncate sm:text-sm">
+                    {stat.name}
+                  </dt>
+                  <dd className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mt-0.5">
+                    {stat.value}
+                  </dd>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Recent Invoices Section - Mobile First */}
+      {/* Recent Invoices Section */}
       <div className="overflow-hidden bg-white shadow-sm rounded-xl">
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 sm:px-6 sm:py-4">
           <h2 className="text-base font-semibold text-gray-900 sm:text-lg">
@@ -144,7 +156,7 @@ export default async function DashboardPage() {
         
         {data.recentInvoices.length > 0 ? (
           <div className="divide-y divide-gray-50">
-            {data.recentInvoices.map((invoice, index) => (
+            {data.recentInvoices.map((invoice) => (
               <Link
                 key={invoice._id}
                 href={`/dashboard/invoices/${invoice._id}`}
@@ -235,28 +247,6 @@ export default async function DashboardPage() {
             </Link>
           </div>
         )}
-      </div>
-
-      {/* Quick Stats Footer - Optional */}
-      <div className="grid grid-cols-2 gap-3 mt-6 sm:grid-cols-4 lg:hidden">
-        <div className="p-3 text-center bg-white rounded-lg shadow-sm">
-          <p className="text-xs text-gray-500">Pending</p>
-          <p className="text-lg font-bold text-yellow-600">{data.pendingInvoices}</p>
-        </div>
-        <div className="p-3 text-center bg-white rounded-lg shadow-sm">
-          <p className="text-xs text-gray-500">Overdue</p>
-          <p className="text-lg font-bold text-red-600">{data.overdueInvoices}</p>
-        </div>
-        <div className="p-3 text-center bg-white rounded-lg shadow-sm">
-          <p className="text-xs text-gray-500">Paid</p>
-          <p className="text-lg font-bold text-green-600">
-            {data.recentInvoices.filter(i => i.status === 'paid').length}
-          </p>
-        </div>
-        <div className="p-3 text-center bg-white rounded-lg shadow-sm">
-          <p className="text-xs text-gray-500">Total</p>
-          <p className="text-lg font-bold text-indigo-600">{data.totalInvoices}</p>
-        </div>
       </div>
     </div>
   );
