@@ -66,7 +66,7 @@ export async function POST(req) {
     }
 
     const message = isTestMode 
-      ? `Test email sent to ${recipientEmail} (client's email would be: ${client.email})`
+      ? `Email to ${recipientEmail} (client's email would be: ${client.email})`
       : `Invoice sent to ${client.email}`;
 
     return NextResponse.json({ 

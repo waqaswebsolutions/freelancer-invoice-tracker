@@ -1,5 +1,4 @@
-"use client";
-
+'use client'
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -248,7 +247,7 @@ export default function InvoicesPage() {
                             e.stopPropagation();
                             handleRowClick(invoice._id);
                           }}
-                          className="inline-flex items-center gap-1 px-2 py-1 text-xs text-indigo-600 transition-colors rounded cursor-pointer  hover:bg-indigo-50"
+                          className="inline-flex items-center gap-1 px-2 py-1 text-xs text-indigo-600 transition-colors rounded cursor-pointer hover:bg-indigo-50"
                         >
                           <Eye className="w-3 h-3" />
                           View

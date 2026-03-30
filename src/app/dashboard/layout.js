@@ -10,13 +10,17 @@ export default async function DashboardLayout({ children }) {
     redirect("/sign-in");
   }
 
+  console.log("DashboardLayout rendering with Sidebar"); // Add this
+
   return (
-    <div className="min-h-screen bg-gray-50" suppressHydrationWarning>
+    <div className="relative min-h-screen bg-gray-50">
       <Sidebar />
-      <div id="dashboard-main-content" className="transition-all duration-300 ease-in-out lg:ml-64" suppressHydrationWarning>
+      <div className="pl-64 transition-all duration-300 ease-in-out" id="dashboard-main-content">
         <Header />
         <main className="py-4 sm:py-6 lg:py-8">
-          {children}
+          <div className="px-4 sm:px-6 lg:px-8">
+            {children}
+          </div>
         </main>
       </div>
     </div>

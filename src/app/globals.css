@@ -31,11 +31,13 @@ body {
 
 /* Responsive utilities */
 @layer utilities {
+
   /* Hide scrollbar but keep functionality */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
@@ -63,10 +65,13 @@ body {
 
 /* Touch-friendly buttons on mobile */
 @media (max-width: 768px) {
-  button, 
+
+  button,
   [role="button"],
   a {
     min-height: 44px;
     min-width: 44px;
   }
 }
+
+
