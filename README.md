@@ -1,5 +1,22 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+
+A Freelancer Invoice Tracker web application built with Next.js and MongoDB.
+
+This tool helps freelancers manage their invoices, track payments, and monitor client billing history.
+
+Key features include:
+- Create and send invoices to clients
+- Track paid and unpaid invoices
+- View payment status dashboard
+- Manage client information
+- Secure login for freelancer account
+
+Built with Next.js, React, Node.js, MongoDB, and Tailwind CSS. Fully responsive and database-driven.
+
+Live Demo:https://freelancer-invoice-tracker-seven.vercel.app/   
+
+
 ## Getting Started
 
 First, run the development server:
